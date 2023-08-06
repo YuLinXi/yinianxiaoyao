@@ -34,6 +34,8 @@ const createData = (
     kedu = "未知",
     ziyuan = "未知",
     huodong = "无信息",
+    zhudonggubao = '无信息',
+    zhuangbei = '无信息'
   } = {}
 ) => {
   const { status, extend } = item;
@@ -51,6 +53,8 @@ const createData = (
     item.collected || "-",
     ziyuan || "-",
     huodong || "-",
+    zhudonggubao || "-",
+    zhuangbei || "-",
   ];
 };
 
@@ -93,9 +97,9 @@ const handleData = async (data, sellType) => {
         item.billId
       );
       await sleep();
-      const { huodong, originData: originData4 } = await fetchRole(item.billId);
+      const { huodong, originData: originData4,zhudonggubao,zhuangbei } = await fetchRole(item.billId);
       resultData = resultData.concat([
-        createData(item, { zhibao, kedu, ziyuan, huodong }),
+        createData(item, { zhibao, kedu, ziyuan, huodong ,zhudonggubao,zhuangbei}),
       ]);
       completedCount++;
       console.log(`======= 进度：${completedCount}/${filterData.length}`);
@@ -105,6 +109,8 @@ const handleData = async (data, sellType) => {
         dongfuxinxi: originData2,
         xingnang: originData3,
         juese: originData4,
+        zhudonggubao,
+        zhuangbei
       });
     }
     storeData(deailtDataList, "detail");
@@ -248,9 +254,221 @@ const fetchRole = async (id) => {
       }
       return `${name}:未获取`;
     });
+    const zhuangbeilist = info.show_list[6].list
+    // [
+    //   {
+    //     "name":"泰阿剑",
+    //     "icon":"Assets/UI/Icons/Item/91078.png",
+    //     "quality":"orange",
+    //     "level":6,
+    //     "grade":8,
+    //     "class_id":91129,
+    //     "gubao_tags":"others",
+    //     "item_type":"gubao",
+    //     "rid":"I03B762EDB37B0001"
+    // },
+    // {
+    //     "name":"寒星囚龙戟",
+    //     "icon":"Assets/UI/Icons/Item/n91240.png",
+    //     "quality":"orange",
+    //     "level":6,
+    //     "grade":8,
+    //     "class_id":91337,
+    //     "gubao_tags":"others",
+    //     "item_type":"gubao",
+    //     "rid":"I03B7632677D00000"
+    // },
+    // {
+    //     "name":"坤元量天尺",
+    //     "icon":"Assets/UI/Icons/Item/n91547.png",
+    //     "quality":"orange",
+    //     "level":4,
+    //     "grade":8,
+    //     "class_id":91547,
+    //     "gubao_tags":"others",
+    //     "item_type":"gubao",
+    //     "rid":"I03BB23B23DAB0006"
+    // },
+    // {
+    //     "rid":"E03A8A459CEF50000",
+    //     "icon":"Assets/UI/Icons/Item/n31501.png",
+    //     "name":"昊天宝剑",
+    //     "quality":"orange",
+    //     "level":159,
+    //     "equip_levelup":4,
+    //     "equip_type":"weapon",
+    //     "class_id":31501,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A8645907140000",
+    //     "icon":"Assets/UI/Icons/Item/n31510.png",
+    //     "name":"昊天宝链",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"fabao",
+    //     "class_id":31510,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A8A46EB55E0000",
+    //     "icon":"Assets/UI/Icons/Item/n31508.png",
+    //     "name":"昊天宝钟",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"fabao",
+    //     "class_id":31508,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A8A46EB5B60000",
+    //     "icon":"Assets/UI/Icons/Item/n31508.png",
+    //     "name":"昊天宝钟",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"fabao",
+    //     "class_id":31508,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A8A474A4200000",
+    //     "icon":"Assets/UI/Icons/Item/n31505.png",
+    //     "name":"昊天宝环",
+    //     "quality":"orange",
+    //     "level":159,
+    //     "equip_levelup":2,
+    //     "equip_type":"accessories",
+    //     "class_id":31505,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A924A0C8E00000",
+    //     "icon":"Assets/UI/Icons/Item/n31507.png",
+    //     "name":"昊天宝印",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"fabao",
+    //     "class_id":31507,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A924A21A8F0001",
+    //     "icon":"Assets/UI/Icons/Item/n31507.png",
+    //     "name":"昊天宝印",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"fabao",
+    //     "class_id":31507,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03AA2473F5BA0000",
+    //     "icon":"Assets/UI/Icons/Item/n31444.png",
+    //     "name":"昊天煞锤",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"fabao",
+    //     "class_id":31248,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // },
+    // {
+    //     "rid":"E03A8A4C274300000",
+    //     "icon":"Assets/UI/Icons/Item/n31504.png",
+    //     "name":"后土古袍",
+    //     "quality":"orange",
+    //     "level":139,
+    //     "equip_levelup":1,
+    //     "equip_type":"cloth",
+    //     "class_id":31504,
+    //     "item_type":"equipment",
+    //     "affix":[
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_purple.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png",
+    //         "Assets/UI/WindowAssets/EquipAshram/mark_blue.png"
+    //     ]
+    // }
+
+    // 分析装备  item_type gubao 为主动古宝
+    // 分析装备  item_type equipment 为装备
+    // 分析装备  装备存在 equip_levelup 为装备精炼等级
+    // 分析装备  装备存在 level 为装备共鸣等级
+    // 分析装备  主动古宝 level 为古宝星级
+    // 分析装备  主动古宝 grade 为古宝等级
+
+    // 根据列表分析装备
+    // 统计主动古宝
+    const zdgb_list = zhuangbeilist.filter(item => item.item_type === 'gubao')
+    const zdgb= zdgb_list.map(item => {
+      if (item.level === 6 && item.grade === 8) {
+        return `${item.name}:已满星`
+      }
+      return `${item.name}:未满星`
+    })
+    // 统计装备精炼等级
+    const zb_list = zhuangbeilist.filter(item => item.item_type === 'equipment')
+    let jl_arr = []
+    let gm_arr = []
+    zb_list.forEach(item => {
+      if (item.equip_levelup) {
+        jl_arr.push(item.equip_levelup)
+      }
+      if (item.level) {
+        gm_arr.push(item.level)
+      }
+    })
+    const jl_str = jl_arr.length ? `装备精炼等级：${jl_arr.join('、')}` : ''
+    const gm_str = gm_arr.length ? `装备最低共鸣等级：${Math.min(...gm_arr)}` : ''
     return {
       huodong: [].concat(yifuList, guajianList).join("；  "),
       originData: info,
+      zhudonggubao: zdgb.join('；  '),
+      zhuangbei: [jl_str, gm_str].filter(item => item).join('；  ')
     };
   } catch (err) {
     throw new Error("查询活动资源错误");
