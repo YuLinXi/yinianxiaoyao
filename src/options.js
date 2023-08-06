@@ -1,4 +1,4 @@
-const cookie = "SESSION=YjdjYjY3NWEtYTM0Mi00YzdlLWJjN2UtN2Q5NzIwNzk4NGRm";
+const cookie = "SESSION=NGJkNGMwNzEtNTk1NS00Y2ZlLWFjZGQtYjc5YmFiMTNjYmRi";
 
 const xlsxHeader = [
   { n: "订单状态", w: { wch: 12 } },
@@ -14,6 +14,8 @@ const xlsxHeader = [
   { n: "收藏", w: { wch: 6 } },
   { n: "资源", w: { wch: 80 } },
   { n: "活动", w: { wch: 120 } },
+  { n: "主动古宝", w: { wch: 120 } },
+  { n: "装备", w: { wch: 120 } },
 ];
 
 const keduList = [
@@ -35,10 +37,10 @@ const PAGE_SIZE = 5000;
 // 真仙 / 真武中期 - 真仙 / 真武后期
 // 亮点标签 - 造化至宝
 const listFilter = {
-  startHp: 37,
-  endHp: 38,
-  startMp: 37,
-  endMp: 38,
+  startHp: 35,
+  endHp: 35,
+  startMp: 35,
+  endMp: 35,
   zaohua: 1,
 };
 
@@ -46,7 +48,7 @@ const listFilter = {
 const requestServerTimeRandomRange = [0.5, 1];
 
 // 角色位面范围过滤查询
-const limitServerRange = [2900, 3000];
+const limitServerRange = [3600, 3900];
 
 // 查找背包资源
 const findDaoju = [

@@ -34,6 +34,8 @@ const createData = (
     kedu = "未知",
     ziyuan = "未知",
     huodong = "无信息",
+    zhudonggubao = '无信息',
+    zhuangbei = '无信息'
   } = {}
 ) => {
   const { status, extend } = item;
@@ -51,6 +53,8 @@ const createData = (
     item.collected || "-",
     ziyuan || "-",
     huodong || "-",
+    zhudonggubao || "-",
+    zhuangbei || "-",
   ];
 };
 
@@ -93,9 +97,9 @@ const handleData = async (data, sellType) => {
         item.billId
       );
       await sleep();
-      const { huodong, originData: originData4 } = await fetchRole(item.billId);
+      const { huodong, originData: originData4,zhudonggubao,zhuangbei } = await fetchRole(item.billId);
       resultData = resultData.concat([
-        createData(item, { zhibao, kedu, ziyuan, huodong }),
+        createData(item, { zhibao, kedu, ziyuan, huodong ,zhudonggubao,zhuangbei}),
       ]);
       completedCount++;
       console.log(`======= 进度：${completedCount}/${filterData.length}`);
@@ -105,6 +109,8 @@ const handleData = async (data, sellType) => {
         dongfuxinxi: originData2,
         xingnang: originData3,
         juese: originData4,
+        zhudonggubao,
+        zhuangbei
       });
     }
     storeData(deailtDataList, "detail");
@@ -248,9 +254,33 @@ const fetchRole = async (id) => {
       }
       return `${name}:未获取`;
     });
+    const zhuangbeilist = info.show_list[6].list
+    const zdgb_list = zhuangbeilist.filter(item => item.item_type === 'gubao')
+    const zdgb= zdgb_list.map(item => {
+      if (item.level === 6 && item.grade === 8) {
+        return `${item.name}:已满星`
+      }
+      return `${item.name}:未满星`
+    })
+    // 统计装备精炼等级
+    const zb_list = zhuangbeilist.filter(item => item.item_type === 'equipment')
+    let jl_arr = []
+    let gm_arr = []
+    zb_list.forEach(item => {
+      if (item.equip_levelup) {
+        jl_arr.push(item.equip_levelup)
+      }
+      if (item.level) {
+        gm_arr.push(item.level)
+      }
+    })
+    const jl_str = jl_arr.length ? `装备精炼等级：${jl_arr.join('、')}` : ''
+    const gm_str = gm_arr.length ? `装备最低共鸣等级：${Math.min(...gm_arr)}` : ''
     return {
       huodong: [].concat(yifuList, guajianList).join("；  "),
       originData: info,
+      zhudonggubao: zdgb.join('；  '),
+      zhuangbei: [jl_str, gm_str].filter(item => item).join('；  ')
     };
   } catch (err) {
     throw new Error("查询活动资源错误");
